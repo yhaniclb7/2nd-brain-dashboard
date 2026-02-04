@@ -163,9 +163,14 @@ export default function Dashboard() {
 
       {/* Header */}
       <div className="mb-6 flex items-center justify-between flex-wrap gap-4">
-        <div>
-          <h1 className="text-3xl font-bold text-white">2nd Brain Dashboard</h1>
-          <p className="text-slate-400">Command Center - All Associate Work</p>
+        <div className="flex items-center gap-4">
+          <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-indigo-500 to-violet-600 flex items-center justify-center shadow-lg shadow-indigo-500/20">
+            <span className="text-2xl">🧠</span>
+          </div>
+          <div>
+            <h1 className="text-3xl font-bold text-white">2nd Brain</h1>
+            <p className="text-slate-400">Command Center • Executive Dashboard</p>
+          </div>
         </div>
         <div className="flex gap-3 flex-wrap">
           <button
