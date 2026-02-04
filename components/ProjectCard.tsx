@@ -49,78 +49,66 @@ export default function ProjectCard({ project, onAssignToMe, onDelete }: Project
     <div 
       draggable
       onDragStart={handleDragStart}
-      className="bg-[#1a1a2e] border border-slate-700 rounded-lg p-4 hover:border-indigo-500/50 hover:shadow-lg hover:shadow-indigo-500/10 transition-all cursor-grab active:cursor-grabbing group"
+      className="bg-[#1a1a2e] border border-slate-700 rounded-lg p-2.5 sm:p-4 hover:border-indigo-500/50 hover:shadow-lg hover:shadow-indigo-500/10 transition-all cursor-grab active:cursor-grabbing group"
     >
       {/* Header */}
-      <div className="flex justify-between items-start mb-2">
+      <div className="flex justify-between items-start gap-2 mb-1.5 sm:mb-2">
         <h3 
-          className="font-semibold text-white cursor-pointer hover:text-indigo-400 transition-colors flex-1 mr-2"
+          className="font-semibold text-white text-sm sm:text-base cursor-pointer hover:text-indigo-400 transition-colors flex-1 truncate"
           onClick={() => setExpanded(!expanded)}
         >
           {project.name}
         </h3>
-        <div className="flex items-center gap-1">
-          <span className={`text-[10px] px-2 py-0.5 rounded-full border ${categoryColors[project.category] || 'text-slate-400 bg-slate-800'}`}>
-            {project.category}
-          </span>
-          <span className={`text-xs px-2 py-0.5 rounded-full ${priorityColors[project.priority]}`}>
-            {project.priority}
+        <div className="flex items-center gap-1 flex-shrink-0">
+          <span className={`text-[9px] sm:text-[10px] px-1.5 sm:px-2 py-0.5 rounded-full border ${categoryColors[project.category] || 'text-slate-400 bg-slate-800'}`}>
+            {project.category.slice(0, 3)}
           </span>
         </div>
       </div>
       
-      {/* Description */}
-      <p className="text-sm text-slate-400 mb-3 line-clamp-2">{project.description}</p>
+      {/* Description - Hidden on mobile unless expanded */}
+      <p className="hidden sm:block text-sm text-slate-400 mb-2 line-clamp-1">{project.description}</p>
       
-      {/* Assignee & Progress */}
-      <div className="flex justify-between items-center mb-3">
-        <span className={`text-xs font-medium ${assigneeColors[project.assignee] || 'text-slate-400'}`}>
-          @{project.assignee}
+      {/* Assignee & Progress Row */}
+      <div className="flex justify-between items-center mb-1.5 sm:mb-2">
+        <span className={`text-[10px] sm:text-xs font-medium ${assigneeColors[project.assignee] || 'text-slate-400'}`}>
+          @{project.assignee.split('-')[0]}
         </span>
-        <span className="text-xs text-slate-500">
-          {completedDeliverables}/{totalDeliverables}
-        </span>
+        {readyForReview > 0 && (
+          <span className="text-[10px] sm:text-xs text-amber-400">
+            ⚡ {readyForReview}
+          </span>
+        )}
       </div>
 
-      {/* Progress bar */}
-      <div className="h-1 bg-slate-800 rounded-full overflow-hidden mb-3">
+      {/* Progress bar - thinner on mobile */}
+      <div className="h-0.5 sm:h-1 bg-slate-800 rounded-full overflow-hidden mb-2 sm:mb-3">
         <div 
           className="h-full bg-indigo-500 transition-all"
           style={{ width: `${(completedDeliverables / totalDeliverables) * 100}%` }}
         />
       </div>
 
-      {/* Ready for review badge */}
-      {readyForReview > 0 && (
-        <div className="mb-3 p-2 bg-amber-500/10 border border-amber-500/30 rounded-lg">
-          <span className="text-sm font-medium text-amber-400">
-            ⚡ {readyForReview} ready for review
-          </span>
-        </div>
-      )}
-
-      {/* Actions */}
-      <div className="flex gap-2 opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity">
+      {/* Actions - Always visible on mobile, compact */}
+      <div className="flex gap-1.5 sm:gap-2">
         {project.assignee !== 'Donna' && onAssignToMe && (
           <button
             onClick={() => onAssignToMe(project.id)}
-            className="text-xs bg-violet-600/20 hover:bg-violet-600/30 text-violet-300 px-2 py-1 rounded transition-colors flex-1 sm:flex-none"
+            className="text-[10px] sm:text-xs bg-violet-600/20 hover:bg-violet-600/30 text-violet-300 px-1.5 sm:px-2 py-0.5 sm:py-1 rounded transition-colors"
           >
-            <span className="hidden sm:inline">Assign to me</span>
-            <span className="sm:hidden">Take</span>
+            Take
           </button>
         )}
         <button
           onClick={() => setExpanded(!expanded)}
-          className="text-xs bg-slate-800 hover:bg-slate-700 text-slate-300 px-2 py-1 rounded transition-colors"
+          className="text-[10px] sm:text-xs bg-slate-800 hover:bg-slate-700 text-slate-300 px-1.5 sm:px-2 py-0.5 sm:py-1 rounded transition-colors flex-1"
         >
           {expanded ? 'Less' : 'More'}
         </button>
         {onDelete && (
           <button
             onClick={() => onDelete(project.id)}
-            className="text-xs bg-rose-600/20 hover:bg-rose-600/30 text-rose-300 px-2 py-1 rounded transition-colors"
-            title="Delete project"
+            className="text-[10px] sm:text-xs bg-rose-600/20 hover:bg-rose-600/30 text-rose-300 px-1.5 sm:px-2 py-0.5 sm:py-1 rounded transition-colors"
           >
             🗑
           </button>
@@ -129,27 +117,27 @@ export default function ProjectCard({ project, onAssignToMe, onDelete }: Project
 
       {/* Expanded details */}
       {expanded && (
-        <div className="mt-3 pt-3 border-t border-slate-700 space-y-2">
-          <p className="text-xs text-slate-500">
-            Created: {new Date(project.createdAt).toLocaleDateString()}
-          </p>
-          <p className="text-xs text-slate-500">
-            Updated: {new Date(project.updatedAt).toLocaleDateString()}
+        <div className="mt-2 sm:mt-3 pt-2 sm:pt-3 border-t border-slate-700 space-y-1 sm:space-y-2">
+          <p className="text-xs text-slate-400 sm:hidden line-clamp-2">{project.description}</p>
+          <p className="text-[10px] sm:text-xs text-slate-500">
+            {completedDeliverables}/{totalDeliverables} done • Updated {new Date(project.updatedAt).toLocaleDateString()}
           </p>
           <div className="space-y-1">
-            <p className="text-xs font-medium text-slate-400">Deliverables:</p>
-            {project.deliverables.map(d => (
-              <div key={d.id} className="flex items-center gap-2 text-xs">
+            {project.deliverables.slice(0, 3).map(d => (
+              <div key={d.id} className="flex items-center gap-2 text-[10px] sm:text-xs">
                 <span className={`
-                  w-2 h-2 rounded-full
+                  w-1.5 h-1.5 rounded-full
                   ${d.status === 'approved' ? 'bg-emerald-500' : ''}
                   ${d.status === 'ready-for-review' ? 'bg-amber-500' : ''}
                   ${d.status === 'in-progress' ? 'bg-blue-500' : ''}
                   ${d.status === 'pending' ? 'bg-slate-600' : ''}
                 `} />
-                <span className="text-slate-400">{d.title}</span>
+                <span className="text-slate-400 truncate">{d.title}</span>
               </div>
             ))}
+            {project.deliverables.length > 3 && (
+              <p className="text-[10px] text-slate-500">+{project.deliverables.length - 3} more</p>
+            )}
           </div>
         </div>
       )}

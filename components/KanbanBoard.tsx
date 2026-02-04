@@ -48,7 +48,7 @@ export default function KanbanBoard({ projects, onStatusChange, onAssignToMe, on
                 {columnProjects.length}
               </span>
             </h3>
-            <div className="space-y-2 sm:space-y-3 overflow-y-auto flex-1" style={{ maxHeight: 'calc(100vh - 280px)' }}>
+            <div className="space-y-2 sm:space-y-3 overflow-y-auto flex-1" style={{ maxHeight: 'calc(100vh - 220px)' }}>
               {columnProjects.map(project => (
                 <ProjectCard 
                   key={project.id} 

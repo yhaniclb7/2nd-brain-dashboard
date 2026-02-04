@@ -127,7 +127,7 @@ export default function Dashboard() {
   }
 
   return (
-    <div className="min-h-screen p-6 bg-[#0a0a0f]">
+    <div className="min-h-screen p-3 sm:p-6 bg-[#0a0a0f]">
       {/* Notification */}
       {notification && (
         <div className="fixed top-4 right-4 z-50 animate-slide-in">
@@ -162,14 +162,14 @@ export default function Dashboard() {
       )}
 
       {/* Header */}
-      <div className="mb-6 flex items-center justify-between flex-wrap gap-4">
-        <div className="flex items-center gap-4">
-          <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-indigo-500 to-violet-600 flex items-center justify-center shadow-lg shadow-indigo-500/20">
-            <span className="text-2xl">🧠</span>
+      <div className="mb-4 sm:mb-6 flex items-center justify-between flex-wrap gap-3 sm:gap-4">
+        <div className="flex items-center gap-2 sm:gap-4">
+          <div className="w-9 h-9 sm:w-12 sm:h-12 rounded-lg sm:rounded-xl bg-gradient-to-br from-indigo-500 to-violet-600 flex items-center justify-center shadow-lg shadow-indigo-500/20">
+            <span className="text-lg sm:text-2xl">🧠</span>
           </div>
           <div>
-            <h1 className="text-3xl font-bold text-white">2nd Brain</h1>
-            <p className="text-slate-400">Command Center • Executive Dashboard</p>
+            <h1 className="text-xl sm:text-3xl font-bold text-white">2nd Brain</h1>
+            <p className="text-xs sm:text-base text-slate-400 hidden sm:block">Command Center • Executive Dashboard</p>
           </div>
         </div>
         <div className="flex gap-3 flex-wrap">
@@ -230,11 +230,11 @@ export default function Dashboard() {
       </div>
 
       {/* Kanban Board */}
-      <div className="bg-[#13131f] rounded-xl border border-slate-800 p-6">
-        <div className="flex items-center justify-between mb-4">
-          <h2 className="text-xl font-semibold text-white">Project Board</h2>
-          <div className="text-sm text-slate-400">
-            Drag cards to update status • Click to expand • Hover for actions
+      <div className="bg-[#13131f] rounded-xl border border-slate-800 p-3 sm:p-6">
+        <div className="flex items-center justify-between mb-2 sm:mb-4">
+          <h2 className="text-lg sm:text-xl font-semibold text-white">Project Board</h2>
+          <div className="text-xs sm:text-sm text-slate-400 hidden sm:block">
+            Drag cards to update status • Click to expand
           </div>
         </div>
         <div className="h-[calc(100vh-380px)]">
