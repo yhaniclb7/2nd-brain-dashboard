@@ -100,13 +100,14 @@ export default function ProjectCard({ project, onAssignToMe, onDelete }: Project
       )}
 
       {/* Actions */}
-      <div className="flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+      <div className="flex gap-2 opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity">
         {project.assignee !== 'Donna' && onAssignToMe && (
           <button
             onClick={() => onAssignToMe(project.id)}
-            className="text-xs bg-violet-600/20 hover:bg-violet-600/30 text-violet-300 px-2 py-1 rounded transition-colors"
+            className="text-xs bg-violet-600/20 hover:bg-violet-600/30 text-violet-300 px-2 py-1 rounded transition-colors flex-1 sm:flex-none"
           >
-            Assign to me
+            <span className="hidden sm:inline">Assign to me</span>
+            <span className="sm:hidden">Take</span>
           </button>
         )}
         <button
@@ -118,7 +119,7 @@ export default function ProjectCard({ project, onAssignToMe, onDelete }: Project
         {onDelete && (
           <button
             onClick={() => onDelete(project.id)}
-            className="text-xs bg-rose-600/20 hover:bg-rose-600/30 text-rose-300 px-2 py-1 rounded transition-colors ml-auto"
+            className="text-xs bg-rose-600/20 hover:bg-rose-600/30 text-rose-300 px-2 py-1 rounded transition-colors"
             title="Delete project"
           >
             🗑

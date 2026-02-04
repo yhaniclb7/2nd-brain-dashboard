@@ -188,44 +188,44 @@ export default function Dashboard() {
         </div>
       </div>
 
-      {/* Filters */}
-      <div className="mb-6 flex items-center gap-4 flex-wrap">
-        <div className="flex items-center gap-2">
-          <span className="text-sm text-slate-400">Filter:</span>
+      {/* Filters - Mobile Optimized */}
+      <div className="mb-4 sm:mb-6 flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4">
+        <div className="flex items-center gap-2 flex-wrap">
+          <span className="text-sm text-slate-400 hidden sm:inline">Filter:</span>
           <select
             value={filterCategory}
             onChange={e => setFilterCategory(e.target.value)}
-            className="bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-indigo-500"
+            className="bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-indigo-500 flex-1 sm:flex-none"
           >
             {categories.map(c => <option key={c} value={c}>{c}</option>)}
           </select>
           <select
             value={filterAssignee}
             onChange={e => setFilterAssignee(e.target.value)}
-            className="bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-indigo-500"
+            className="bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-indigo-500 flex-1 sm:flex-none"
           >
             {assignees.map(a => <option key={a} value={a}>{a}</option>)}
           </select>
           {(filterCategory !== 'All' || filterAssignee !== 'All') && (
             <button
               onClick={clearFilters}
-              className="text-sm text-indigo-400 hover:text-indigo-300"
+              className="text-sm text-indigo-400 hover:text-indigo-300 px-2"
             >
               Clear
             </button>
           )}
         </div>
-        <span className="text-sm text-slate-500">
-          Showing {filteredProjects.length} of {projects.length} projects
+        <span className="text-xs sm:text-sm text-slate-500">
+          {filteredProjects.length}/{projects.length} projects
         </span>
       </div>
 
-      {/* Stats Row */}
-      <div className="grid grid-cols-5 gap-4 mb-6">
-        <StatsCard title="Total Projects" value={stats.totalProjects} color="blue" />
+      {/* Stats Row - Responsive */}
+      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3 sm:gap-4 mb-6">
+        <StatsCard title="Total" value={stats.totalProjects} color="blue" />
         <StatsCard title="In Progress" value={stats.inProgress} color="yellow" />
-        <StatsCard title="Ready for Review" value={stats.readyForReview} color="red" />
-        <StatsCard title="Completed" value={stats.completedThisWeek} color="green" />
+        <StatsCard title="Review" value={stats.readyForReview} color="red" />
+        <StatsCard title="Done" value={stats.completedThisWeek} color="green" />
         <StatsCard title="My Tasks" value={stats.myTasks} color="purple" />
       </div>
 

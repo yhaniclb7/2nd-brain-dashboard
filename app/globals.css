@@ -130,3 +130,33 @@ select:focus-visible {
   background: rgba(99, 102, 241, 0.3);
   color: white;
 }
+
+/* Mobile optimizations */
+@supports (-webkit-touch-callout: none) {
+  /* iOS Safari specific */
+  body {
+    -webkit-tap-highlight-color: transparent;
+  }
+}
+
+/* Touch action for smoother scrolling */
+.touch-pan-x {
+  touch-action: pan-x;
+}
+
+.touch-pan-y {
+  touch-action: pan-y;
+}
+
+/* Prevent text selection on drag */
+[draggable="true"] {
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+/* Mobile button sizing */
+@media (max-width: 640px) {
+  button, select, input {
+    min-height: 44px;
+  }
+}
