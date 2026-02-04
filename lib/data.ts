@@ -7,6 +7,7 @@ export const mockProjects: Project[] = [
     description: 'Command Center for monitoring all Associate work and Donna tasks',
     status: 'complete',
     assignee: 'Donna',
+    category: 'Infrastructure',
     createdAt: '2026-02-04T08:00:00Z',
     updatedAt: '2026-02-04T21:30:00Z',
     priority: 'high',
@@ -22,6 +23,7 @@ export const mockProjects: Project[] = [
     description: 'Research revenue-generating app opportunities ($5M+ ARR potential)',
     status: 'complete',
     assignee: 'AppDev-Associate',
+    category: 'Revenue',
     createdAt: '2026-02-03T22:00:00Z',
     updatedAt: '2026-02-03T22:15:00Z',
     priority: 'high',
@@ -35,6 +37,7 @@ export const mockProjects: Project[] = [
     description: 'LinkedIn and Instagram content strategy for Yhanic personal brand',
     status: 'complete',
     assignee: 'SocialMedia-Associate',
+    category: 'Personal',
     createdAt: '2026-02-03T22:00:00Z',
     updatedAt: '2026-02-03T22:05:00Z',
     priority: 'medium',
@@ -49,6 +52,7 @@ export const mockProjects: Project[] = [
     description: 'Full tooling stack: Telegram, GitHub, Vercel, API integrations',
     status: 'complete',
     assignee: 'Donna',
+    category: 'Infrastructure',
     createdAt: '2026-02-04T06:00:00Z',
     updatedAt: '2026-02-04T21:00:00Z',
     priority: 'urgent',
@@ -64,6 +68,7 @@ export const mockProjects: Project[] = [
     description: 'Coordinate gifts and logistics for Feb 14 (Moldovan/Eastern European - flowers required)',
     status: 'in-progress',
     assignee: 'Donna',
+    category: 'Personal',
     createdAt: '2026-02-03T21:00:00Z',
     updatedAt: '2026-02-04T16:00:00Z',
     priority: 'high',
@@ -79,6 +84,7 @@ export const mockProjects: Project[] = [
     description: 'First B2B SaaS app from Associate research - targeting quick revenue',
     status: 'in-progress',
     assignee: 'AppDev-Associate',
+    category: 'Revenue',
     createdAt: '2026-02-04T21:00:00Z',
     updatedAt: '2026-02-04T21:00:00Z',
     priority: 'high',
@@ -94,6 +100,7 @@ export const mockProjects: Project[] = [
     description: 'Preparation for pilot training starting next month',
     status: 'queue',
     assignee: 'Yhanic',
+    category: 'Aviation',
     createdAt: '2026-02-04T21:00:00Z',
     updatedAt: '2026-02-04T21:00:00Z',
     priority: 'medium',
@@ -108,6 +115,7 @@ export const mockProjects: Project[] = [
     description: 'Traction for breaking into larger VC/PE firms',
     status: 'queue',
     assignee: 'Yhanic',
+    category: 'VC/PE',
     createdAt: '2026-02-04T21:00:00Z',
     updatedAt: '2026-02-04T21:00:00Z',
     priority: 'medium',
@@ -122,6 +130,7 @@ export const mockProjects: Project[] = [
     description: 'Co-founded with Kellogg classmate - ongoing operations',
     status: 'queue',
     assignee: 'Associates',
+    category: 'AI Business',
     createdAt: '2026-02-04T21:00:00Z',
     updatedAt: '2026-02-04T21:00:00Z',
     priority: 'medium',
@@ -132,15 +141,18 @@ export const mockProjects: Project[] = [
   }
 ]
 
-export function getStats(): DashboardStats {
+export function getStats(projects: Project[] = mockProjects): DashboardStats {
   return {
-    totalProjects: mockProjects.length,
-    inProgress: mockProjects.filter(p => p.status === 'in-progress').length,
-    readyForReview: mockProjects.flatMap(p => p.deliverables).filter(d => d.status === 'ready-for-review').length,
-    completedThisWeek: mockProjects.filter(p => p.status === 'complete').length
+    totalProjects: projects.length,
+    inProgress: projects.filter(p => p.status === 'in-progress').length,
+    readyForReview: projects.flatMap(p => p.deliverables).filter(d => d.status === 'ready-for-review').length,
+    completedThisWeek: projects.filter(p => p.status === 'complete').length
   }
 }
 
-export function getProjectsByStatus(status: string): Project[] {
-  return mockProjects.filter(p => p.status === status)
+export function getProjectsByStatus(status: string, projects: Project[] = mockProjects): Project[] {
+  return projects.filter(p => p.status === status)
 }
+
+export const categories = ['All', 'Revenue', 'Personal', 'VC/PE', 'Aviation', 'AI Business', 'Infrastructure'] as const
+export const assignees = ['All', 'Donna', 'AppDev-Associate', 'SocialMedia-Associate', 'Yhanic', 'Associates'] as const

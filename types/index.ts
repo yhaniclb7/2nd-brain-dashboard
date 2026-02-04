@@ -1,4 +1,5 @@
 export type ProjectStatus = 'queue' | 'in-progress' | 'review' | 'complete'
+export type ProjectCategory = 'Revenue' | 'Personal' | 'VC/PE' | 'Aviation' | 'AI Business' | 'Infrastructure'
 
 export interface Project {
   id: string
@@ -6,6 +7,7 @@ export interface Project {
   description: string
   status: ProjectStatus
   assignee: 'Donna' | 'AppDev-Associate' | 'SocialMedia-Associate' | string
+  category: ProjectCategory
   createdAt: string
   updatedAt: string
   deliverables: Deliverable[]

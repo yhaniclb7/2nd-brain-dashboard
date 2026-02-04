@@ -6,9 +6,10 @@ import { Project } from '@/types'
 interface ProjectCardProps {
   project: Project
   onAssignToMe?: (projectId: string) => void
+  onDelete?: (projectId: string) => void
 }
 
-export default function ProjectCard({ project, onAssignToMe }: ProjectCardProps) {
+export default function ProjectCard({ project, onAssignToMe, onDelete }: ProjectCardProps) {
   const [expanded, setExpanded] = useState(false)
 
   const priorityColors = {
@@ -18,11 +19,21 @@ export default function ProjectCard({ project, onAssignToMe }: ProjectCardProps)
     urgent: 'text-rose-400 bg-rose-500/10 font-bold'
   }
 
+  const categoryColors: Record<string, string> = {
+    'Revenue': 'bg-emerald-500/10 text-emerald-400 border-emerald-500/30',
+    'Personal': 'bg-pink-500/10 text-pink-400 border-pink-500/30',
+    'VC/PE': 'bg-blue-500/10 text-blue-400 border-blue-500/30',
+    'Aviation': 'bg-sky-500/10 text-sky-400 border-sky-500/30',
+    'AI Business': 'bg-violet-500/10 text-violet-400 border-violet-500/30',
+    'Infrastructure': 'bg-slate-500/10 text-slate-400 border-slate-500/30'
+  }
+
   const assigneeColors: Record<string, string> = {
     'Donna': 'text-violet-400',
     'Yhanic': 'text-blue-400',
     'AppDev-Associate': 'text-emerald-400',
-    'SocialMedia-Associate': 'text-pink-400'
+    'SocialMedia-Associate': 'text-pink-400',
+    'Associates': 'text-amber-400'
   }
 
   const readyForReview = project.deliverables.filter(d => d.status === 'ready-for-review').length
@@ -43,14 +54,19 @@ export default function ProjectCard({ project, onAssignToMe }: ProjectCardProps)
       {/* Header */}
       <div className="flex justify-between items-start mb-2">
         <h3 
-          className="font-semibold text-white cursor-pointer hover:text-indigo-400 transition-colors"
+          className="font-semibold text-white cursor-pointer hover:text-indigo-400 transition-colors flex-1 mr-2"
           onClick={() => setExpanded(!expanded)}
         >
           {project.name}
         </h3>
-        <span className={`text-xs px-2 py-0.5 rounded-full ${priorityColors[project.priority]}`}>
-          {project.priority}
-        </span>
+        <div className="flex items-center gap-1">
+          <span className={`text-[10px] px-2 py-0.5 rounded-full border ${categoryColors[project.category] || 'text-slate-400 bg-slate-800'}`}>
+            {project.category}
+          </span>
+          <span className={`text-xs px-2 py-0.5 rounded-full ${priorityColors[project.priority]}`}>
+            {project.priority}
+          </span>
+        </div>
       </div>
       
       {/* Description */}
@@ -62,7 +78,7 @@ export default function ProjectCard({ project, onAssignToMe }: ProjectCardProps)
           @{project.assignee}
         </span>
         <span className="text-xs text-slate-500">
-          {completedDeliverables}/{totalDeliverables} done
+          {completedDeliverables}/{totalDeliverables}
         </span>
       </div>
 
@@ -99,6 +115,15 @@ export default function ProjectCard({ project, onAssignToMe }: ProjectCardProps)
         >
           {expanded ? 'Less' : 'More'}
         </button>
+        {onDelete && (
+          <button
+            onClick={() => onDelete(project.id)}
+            className="text-xs bg-rose-600/20 hover:bg-rose-600/30 text-rose-300 px-2 py-1 rounded transition-colors ml-auto"
+            title="Delete project"
+          >
+            🗑
+          </button>
+        )}
       </div>
 
       {/* Expanded details */}

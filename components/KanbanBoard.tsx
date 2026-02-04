@@ -7,9 +7,10 @@ interface KanbanBoardProps {
   projects: Project[]
   onStatusChange?: (projectId: string, newStatus: Project['status']) => void
   onAssignToMe?: (projectId: string) => void
+  onDelete?: (projectId: string) => void
 }
 
-export default function KanbanBoard({ projects, onStatusChange, onAssignToMe }: KanbanBoardProps) {
+export default function KanbanBoard({ projects, onStatusChange, onAssignToMe, onDelete }: KanbanBoardProps) {
   const columns: { id: Project['status']; title: string; color: string; border: string }[] = [
     { id: 'queue', title: 'Queue', color: 'bg-slate-800/50', border: 'border-slate-700' },
     { id: 'in-progress', title: 'In Progress', color: 'bg-blue-500/5', border: 'border-blue-500/30' },
@@ -52,6 +53,7 @@ export default function KanbanBoard({ projects, onStatusChange, onAssignToMe }: 
                   key={project.id} 
                   project={project} 
                   onAssignToMe={onAssignToMe}
+                  onDelete={onDelete}
                 />
               ))}
               {columnProjects.length === 0 && (

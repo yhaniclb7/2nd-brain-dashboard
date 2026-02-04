@@ -1,6 +1,8 @@
 'use client'
 
 import { useState } from 'react'
+import { ProjectCategory } from '@/types'
+import { categories } from '@/lib/data'
 
 interface NewTaskFormProps {
   onClose: () => void
@@ -10,6 +12,7 @@ interface NewTaskFormProps {
     assignee: string
     priority: 'low' | 'medium' | 'high' | 'urgent'
     deliverable: string
+    category: ProjectCategory
   }) => void
 }
 
@@ -19,7 +22,8 @@ export default function NewTaskForm({ onClose, onSubmit }: NewTaskFormProps) {
     description: '',
     assignee: 'Donna',
     priority: 'medium' as const,
-    deliverable: ''
+    deliverable: '',
+    category: 'Revenue' as ProjectCategory
   })
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -30,7 +34,7 @@ export default function NewTaskForm({ onClose, onSubmit }: NewTaskFormProps) {
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm">
-      <div className="bg-[#13131f] border border-slate-700 rounded-xl p-6 w-full max-w-md animate-slide-in">
+      <div className="bg-[#13131f] border border-slate-700 rounded-xl p-6 w-full max-w-md animate-slide-in max-h-[90vh] overflow-y-auto">
         <h3 className="text-xl font-bold text-white mb-4">Assign New Task</h3>
         
         <form onSubmit={handleSubmit} className="space-y-4">
@@ -58,6 +62,19 @@ export default function NewTaskForm({ onClose, onSubmit }: NewTaskFormProps) {
 
           <div className="grid grid-cols-2 gap-4">
             <div>
+              <label className="block text-sm font-medium text-slate-400 mb-1">Category</label>
+              <select
+                value={form.category}
+                onChange={e => setForm({...form, category: e.target.value as ProjectCategory})}
+                className="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-white focus:outline-none focus:border-indigo-500"
+              >
+                {categories.filter(c => c !== 'All').map(c => (
+                  <option key={c} value={c}>{c}</option>
+                ))}
+              </select>
+            </div>
+
+            <div>
               <label className="block text-sm font-medium text-slate-400 mb-1">Assign To</label>
               <select
                 value={form.assignee}
@@ -70,7 +87,9 @@ export default function NewTaskForm({ onClose, onSubmit }: NewTaskFormProps) {
                 <option value="Yhanic">Yhanic</option>
               </select>
             </div>
+          </div>
 
+          <div className="grid grid-cols-2 gap-4">
             <div>
               <label className="block text-sm font-medium text-slate-400 mb-1">Priority</label>
               <select
@@ -84,18 +103,18 @@ export default function NewTaskForm({ onClose, onSubmit }: NewTaskFormProps) {
                 <option value="urgent">Urgent</option>
               </select>
             </div>
-          </div>
 
-          <div>
-            <label className="block text-sm font-medium text-slate-400 mb-1">First Deliverable</label>
-            <input
-              type="text"
-              value={form.deliverable}
-              onChange={e => setForm({...form, deliverable: e.target.value})}
-              className="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-white focus:outline-none focus:border-indigo-500"
-              placeholder="e.g., Compile list of 10 tools"
-              required
-            />
+            <div>
+              <label className="block text-sm font-medium text-slate-400 mb-1">First Deliverable</label>
+              <input
+                type="text"
+                value={form.deliverable}
+                onChange={e => setForm({...form, deliverable: e.target.value})}
+                className="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-white focus:outline-none focus:border-indigo-500"
+                placeholder="e.g., Compile list"
+                required
+              />
+            </div>
           </div>
 
           <div className="flex gap-3 pt-2">
