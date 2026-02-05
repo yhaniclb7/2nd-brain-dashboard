@@ -2,10 +2,12 @@
 
 import { useState, useEffect } from 'react'
 import { Project, Deliverable, ProjectCategory } from '@/types'
-import { mockProjects, getStats, categories, assignees } from '@/lib/data'
+import { mockProjects, getStats, categories, assignees, goldenPrisonMetrics, getAssociateStats } from '@/lib/data'
 import StatsCard from '@/components/StatsCard'
 import KanbanBoard from '@/components/KanbanBoard'
 import NewTaskForm from '@/components/NewTaskForm'
+import GoldenPrisonPanel from '@/components/GoldenPrisonPanel'
+import AssociatePerformancePanel from '@/components/AssociatePerformancePanel'
 
 export default function Dashboard() {
   const [projects, setProjects] = useState<Project[]>(mockProjects)
@@ -227,6 +229,12 @@ export default function Dashboard() {
         <StatsCard title="Review" value={stats.readyForReview} color="red" />
         <StatsCard title="Done" value={stats.completedThisWeek} color="green" />
         <StatsCard title="My Tasks" value={stats.myTasks} color="purple" />
+      </div>
+
+      {/* Golden Prison + Associate Performance */}
+      <div className="grid md:grid-cols-2 gap-4 sm:gap-6 mb-6">
+        <GoldenPrisonPanel metrics={goldenPrisonMetrics} />
+        <AssociatePerformancePanel stats={getAssociateStats()} />
       </div>
 
       {/* Kanban Board */}

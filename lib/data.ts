@@ -1,4 +1,4 @@
-import { Project, DashboardStats } from '@/types'
+import { Project, DashboardStats, GoldenPrisonMetrics, AssociatePerformance, AssociateStats } from '@/types'
 
 export const mockProjects: Project[] = [
   {
@@ -156,3 +156,84 @@ export function getProjectsByStatus(status: string, projects: Project[] = mockPr
 
 export const categories = ['All', 'Revenue', 'Personal', 'VC/PE', 'Aviation', 'AI Business', 'Infrastructure'] as const
 export const assignees = ['All', 'Donna', 'AppDev-Associate', 'SocialMedia-Associate', 'Yhanic', 'Associates'] as const
+
+// Golden Prison Escape Metrics
+export const goldenPrisonMetrics: GoldenPrisonMetrics = {
+  vcNetworkOutreach: {
+    contactsMadeThisMonth: 12,
+    meetingsScheduled: 3,
+    introductionsReceived: 2,
+    target: 20,
+    status: 'on-track'
+  },
+  dealFlowPipeline: {
+    opportunitiesIdentified: 8,
+    dealsReviewed: 4,
+    termSheetsReceived: 0,
+    target: 10,
+    status: 'on-track'
+  },
+  sideBusinessRevenue: {
+    currentMonth: 3500,
+    lastMonth: 2800,
+    growth: 25,
+    target: 5000,
+    status: 'on-track'
+  },
+  learningProgress: {
+    booksReadThisMonth: 2,
+    coursesCompleted: 1,
+    skillsAcquired: ['Financial Modeling', 'Python Automation'],
+    target: 4,
+    status: 'at-risk'
+  },
+  overallStatus: 'sharp',
+  lastUpdated: '2026-02-04T21:00:00Z'
+}
+
+// Associate Performance Data
+export const associatePerformance: AssociatePerformance[] = [
+  {
+    associateId: 'appdev-1',
+    name: 'AppDev Associate',
+    role: 'Full-Stack Developer',
+    avatar: '💻',
+    tasksCompleted: 4,
+    tasksInProgress: 2,
+    deliverablesSubmitted: 5,
+    deliverablesApproved: 4,
+    timeSavedHours: 45,
+    revenueGenerated: 0,
+    revenueImpact: 'medium',
+    currentTask: 'Building AI Contract Review MVP',
+    nextTaskQueue: ['Aviation Compliance App', 'Landing Page + Stripe Integration'],
+    trend: 'improving',
+    lastActive: '2026-02-04T20:00:00Z'
+  },
+  {
+    associateId: 'social-1',
+    name: 'SocialMedia Associate',
+    role: 'Content Strategist',
+    avatar: '📱',
+    tasksCompleted: 6,
+    tasksInProgress: 1,
+    deliverablesSubmitted: 7,
+    deliverablesApproved: 6,
+    timeSavedHours: 25,
+    revenueGenerated: 0,
+    revenueImpact: 'low',
+    currentTask: 'Drafting LinkedIn post series',
+    nextTaskQueue: ['Instagram carousel design', 'Content calendar for Feb'],
+    trend: 'stable',
+    lastActive: '2026-02-04T19:30:00Z'
+  }
+]
+
+export const getAssociateStats = (): AssociateStats => ({
+  associates: associatePerformance,
+  totalTasksCompleted: associatePerformance.reduce((sum, a) => sum + a.tasksCompleted, 0),
+  totalRevenueGenerated: associatePerformance.reduce((sum, a) => sum + a.revenueGenerated, 0),
+  totalTimeSaved: associatePerformance.reduce((sum, a) => sum + a.timeSavedHours, 0),
+  topPerformer: 'AppDev Associate',
+  needsAttention: []
+})
